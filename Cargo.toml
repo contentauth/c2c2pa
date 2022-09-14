@@ -1,0 +1,15 @@
+[package]
+name = "c2c2pa"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+crate-type = ["staticlib"]
+
+[dependencies]
+c2pa = {path = "../c2pa-rs/sdk", features = ["sign"], default-features = false}
+
+[profile.release] 
+strip = true  # Automatically strip symbols from the binary. 
+opt-level = "z"  # Optimize for size. 
+lto = "thin" # Link time optimization. 
