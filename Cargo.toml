@@ -8,7 +8,7 @@ crate-type = ["staticlib"]
 
 [dependencies]
 # the sign feature allows signing without file_io, remove default features to not use default thumbnail generationsmake 
-c2pa = {git = "https://github.com/contentauth/c2pa-rs.git", branch = "gpeacock/save_to_memory",features = ["sign"], default-features = false}
+c2pa = {git = "https://github.com/contentauth/c2pa-rs.git", branch = "gpeacock/save_to_memory",features = ["sign"]}
 
 [profile.release] 
 strip = true  # Automatically strip symbols from the binary. 

@@ -3,8 +3,8 @@
 #include <stdlib.h>
 
 // This value needs to be large enough to hold the largest expected manifest
-// The method will fail if the buffer is not large enough (ou could retry with a larger one to recover)
-#define MANIFEST_SIZE 1024*20
+// The method will fail if the buffer is not large enough (you could retry with a larger one to recover)
+#define MANIFEST_SIZE 1024*200
 
 // functions exported from the c2c2pa library
 extern void verify_bytes(const char *format, const char *bytes, int length);
