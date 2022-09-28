@@ -2,7 +2,7 @@ use std::ffi::CStr;
 use std::os::raw::c_char;
 use std::slice;
 
-use c2pa::ManifestStore;
+use c2pa::{assertions::Exif, ManifestStore};
 
 // Pull in default certs so the binary can self config
 const SIGN_ALG: c2pa::SigningAlg = c2pa::SigningAlg::Es256;
@@ -53,12 +53,21 @@ pub extern "C" fn sign_bytes(
     // a real manifest should include a thumbnail
     let mut manifest = c2pa::Manifest::new("my_app".to_owned());
     manifest.set_title("EmbedStream");
-    manifest
-        .add_assertion(&c2pa::assertions::User::new(
-            "org.contentauth.mylabel",
-            r#"{"my_tag":"Anything I want"}"#,
-        ))
-        .unwrap();
+    let exif = Exif::from_json_str(
+        r#"{
+        "@context" : {
+          "exif": "http://ns.adobe.com/exif/1.0/"
+        },
+        "exif:GPSVersionID": "2.2.0.0",
+        "exif:GPSLatitude": "39,21.102N",
+        "exif:GPSLongitude": "74,26.5737W",
+        "exif:GPSAltitudeRef": 0,
+        "exif:GPSAltitude": "100963/29890",
+        "exif:GPSTimeStamp": "2019-09-22T18:22:57Z"
+    }"#,
+    )
+    .unwrap();
+    manifest.add_assertion(&exif).unwrap();
 
     // Embed a manifest using the signer.
     let _manifest_bytes = match manifest.embed_stream(&format, &mut stream, signer.as_ref()) {
