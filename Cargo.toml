@@ -8,7 +8,7 @@ crate-type = ["staticlib"]
 
 [dependencies]
 # the sign feature allows signing without file_io, remove no_default_features enable  thumbnail generation
-c2pa = {version="0.16.0", no_default_features = true, features = ["sign"]}
+c2pa = {version="0.16.1", default_features = false, features = ["sign"]}
 
 [profile.release] 
 strip = true  # Automatically strip symbols from the binary. 

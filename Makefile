@@ -9,7 +9,7 @@ CFLAGS = -pthread -Wl,--no-as-needed -ldl -lm
 endif
 release:
 	cargo b --release
-	$(CC) $(CFLAGS) src/main.c -o target/c2c2pa -lc2c2pa -L./target/release 
+	$(CC) $(CFLAGS) src/main.c -o target/c2c2pa -lc2c2pa -L./target/release && strip target/c2c2pa
 
 run: release
 	./target/c2c2pa
